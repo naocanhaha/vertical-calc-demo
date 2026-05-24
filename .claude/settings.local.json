@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__tavily-remote-mcp__tavily_search",
+      "mcp__MiniMax__web_search",
+      "WebSearch",
+      "mcp__zread__get_repo_structure",
+      "mcp__web-reader__webReader",
+      "mcp__tavily-remote-mcp__tavily_crawl",
+      "Bash(start vertical_calc_demo.html)",
+      "Bash(start *)",
+      "mcp__tavily-remote-mcp__tavily_extract"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>竖式计算器</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%235b9a6a'/><text x='16' y='23' font-size='20' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>%2B</text></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- 左栏：计算器 -->
+<div class="calc">
+  <div class="calc-display">
+    <div class="calc-expr" id="calcExpr"></div>
+    <div class="calc-val" id="calcVal">0</div>
+  </div>
+  <div class="calc-grid">
+    <button class="btn-fn" data-act="ac">AC</button>
+    <button class="btn-fn" data-act="del">&#9003;</button>
+    <button class="btn-fn" data-act="neg">&plusmn;</button>
+    <button class="btn-op" data-act="div">&divide;</button>
+    <button class="btn-num" data-act="7">7</button>
+    <button class="btn-num" data-act="8">8</button>
+    <button class="btn-num" data-act="9">9</button>
+    <button class="btn-op" data-act="mul">&times;</button>
+    <button class="btn-num" data-act="4">4</button>
+    <button class="btn-num" data-act="5">5</button>
+    <button class="btn-num" data-act="6">6</button>
+    <button class="btn-op" data-act="sub">&minus;</button>
+    <button class="btn-num" data-act="1">1</button>
+    <button class="btn-num" data-act="2">2</button>
+    <button class="btn-num" data-act="3">3</button>
+    <button class="btn-op" data-act="add">+</button>
+    <button class="btn-num btn-zero" data-act="0">0</button>
+    <button class="btn-num" data-act=".">.</button>
+    <button class="btn-eq" data-act="eq">=</button>
+  </div>
+  <div class="calc-speed">
+    <span>慢</span>
+    <input id="speed" type="range" min="0.3" max="3" step="0.1" value="1">
+    <span>快</span>
+  </div>
+  <button class="btn-replay" id="btnReplay" disabled>重新绘制</button>
+</div>
+
+<!-- 中栏：草稿纸 -->
+<div class="paper-wrap">
+  <div class="paper">
+    <div class="expr-text" id="exprText"></div>
+    <svg id="cv"></svg>
+  </div>
+</div>
+
+<!-- 右栏：讲解 -->
+<div class="explain">
+  <div class="explain-notice" id="explainNotice" style="display:none">AI 生成，仅供参考</div>
+  <div class="explain-body" id="explainBody">
+    <p class="placeholder">按 = 开始计算后<br>这里将显示竖式计算的讲解</p>
+  </div>
+  <div class="explain-footer">
+    <div class="ai-btns">
+      <button class="btn-ai btn-settings" id="btnSettings">设置</button>
+    </div>
+    <div class="settings-panel" id="settingsPanel">
+      <div class="chk"><input type="checkbox" id="cfgEnable">启用 AI 讲解</div>
+      <label>API URL<input type="text" id="cfgUrl" placeholder="https://api.xiaomimimo.com/v1"></label>
+      <label>API Key<input type="password" id="cfgKey" placeholder="sk-..."></label>
+      <label>模型 ID<input type="text" id="cfgModel" placeholder="MiMo-V2.5-Pro"></label>
+      <div class="chk"><input type="checkbox" id="cfgVision" checked>多模态（发送图片）</div>
+    </div>
+  </div>
+</div>
+
+<!-- JS 加载（按依赖顺序） -->
+<script src="js/digits.js"></script>
+<script src="js/svg-draw.js"></script>
+<script src="js/svg-utils.js"></script>
+<script src="js/render.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/ai-explain.js"></script>
+<script src="js/vertical-calc.js"></script>
+<script src="js/anim.js"></script>
+<script src="js/calculator.js"></script>
+</body>
+</html>

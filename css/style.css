@@ -1,0 +1,126 @@
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  background:#eef2ec;display:flex;gap:16px;padding:16px;
+  font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+}
+
+/* ═══ 左栏：计算器 ═══ */
+.calc{
+  width:250px;min-width:250px;background:#fff;
+  display:flex;flex-direction:column;padding:16px;
+  border-radius:14px;box-shadow:0 2px 16px rgba(0,0,0,.06);
+}
+.calc-display{
+  background:#f7f9f6;border:1px solid #dde3da;border-radius:10px;
+  padding:10px 14px;margin-bottom:8px;
+  min-height:72px;display:flex;flex-direction:column;justify-content:flex-end;
+}
+.calc-expr{font-size:13px;color:#8a9a8e;text-align:right;min-height:18px;word-break:break-all}
+.calc-val{font-size:34px;color:#2d3a2e;text-align:right;line-height:1.15;word-break:break-all;min-height:40px}
+
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.calc-grid button{
+  height:42px;border:none;border-radius:8px;font-size:19px;cursor:pointer;
+  font-family:inherit;transition:all .12s;
+  display:flex;align-items:center;justify-content:center;
+}
+.calc-grid button:active{transform:scale(.92)}
+.btn-fn{background:#eef2ec;color:#5a6e5e}
+.btn-fn:hover{background:#e2e8df}
+.btn-op{background:#c8dbca;color:#3a5a3e}
+.btn-op:hover{background:#b8cfba}
+.btn-op.active{background:#5b9a6a;color:#fff;font-weight:bold}
+.btn-num{background:#f7f9f6;color:#2d3a2e;border:1px solid #e2e8df}
+.btn-num:hover{background:#eef2ec}
+.btn-eq{background:#5b9a6a;color:#fff;font-size:22px;font-weight:600}
+.btn-eq:hover{background:#4d8a5c}
+.btn-zero{grid-column:span 2}
+
+.calc-speed{
+  margin-top:8px;display:flex;align-items:center;gap:5px;
+  color:#8a9a8e;font-size:11px;
+}
+.calc-speed input[type=range]{flex:1;accent-color:#5b9a6a;height:3px}
+.btn-replay{
+  margin-top:8px;padding:8px 0;width:100%;border:none;border-radius:8px;
+  background:#eef2ec;color:#5a6e5e;font-size:13px;cursor:pointer;
+  font-family:inherit;transition:all .12s;
+}
+.btn-replay:hover:not(:disabled){background:#d8e2d5;color:#3a5a3e}
+.btn-replay:active:not(:disabled){transform:scale(.97)}
+.btn-replay:disabled{opacity:.35;cursor:not-allowed}
+
+/* ═══ 中栏：草稿纸 ═══ */
+.paper-wrap{
+  flex:1;display:flex;overflow:hidden;min-width:0;
+}
+.paper{
+  background:#fffdf7;border-radius:14px;padding:28px 36px;
+  box-shadow:0 2px 16px rgba(0,0,0,.06);position:relative;
+  flex:1;min-height:0;display:flex;flex-direction:column;
+}
+.paper::before{
+  content:'';position:absolute;inset:0;border-radius:14px;
+  background:repeating-linear-gradient(transparent,transparent 39px,#ece6d8 39px,#ece6d8 40px);
+  pointer-events:none;opacity:.15;
+}
+.expr-text{
+  font-size:20px;color:#5a6e5e;margin-bottom:18px;font-weight:500;
+  letter-spacing:.5px;position:relative;z-index:1;
+}
+.expr-text .eq-result{opacity:0;transition:opacity .5s}
+.expr-text .eq-result.show{opacity:1}
+svg{display:block;position:relative;z-index:1;width:100%;flex:1;min-height:0}
+svg path,svg line{fill:none;stroke:#2d3a2e;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+svg .carry{stroke:#c62828;stroke-width:2}
+svg .carry-mul{stroke:#1565c0;stroke-width:1.8}
+svg .borrow-dot{fill:#c62828;stroke:none}
+svg .dp{fill:#2d3a2e;stroke:none}
+svg .crossout{stroke:#c62828;stroke-width:2.5}
+
+/* ═══ 右栏：讲解面板 ═══ */
+.explain{
+  width:360px;min-width:360px;background:#fff;
+  display:flex;flex-direction:column;
+  border-radius:14px;box-shadow:0 2px 16px rgba(0,0,0,.06);
+}
+.explain-notice{
+  padding:6px 18px;font-size:11px;color:#a0a89e;
+  background:#f7f9f6;border-bottom:1px solid #eef2ec;
+  border-radius:14px 14px 0 0;text-align:center;letter-spacing:1px;
+}
+.explain-body{flex:1;padding:16px 18px;overflow-y:auto;color:#3a4a3e;font-size:13.5px;line-height:1.9;word-break:break-word}
+.explain-body .placeholder{color:#b8c4ba;text-align:center;margin-top:60px;line-height:2;white-space:normal}
+.explain-body h1,.explain-body h2,.explain-body h3{color:#2d3a2e;margin:12px 0 6px;font-weight:600;white-space:normal}
+.explain-body h1{font-size:16px}.explain-body h2{font-size:15px}.explain-body h3{font-size:14px}
+.explain-body strong{color:#2d3a2e}
+.explain-body ul,.explain-body ol{margin:6px 0;padding-left:20px;white-space:normal}
+.explain-body li{margin:2px 0}
+.explain-body code{background:#f0f4ee;padding:1px 5px;border-radius:4px;font-size:12px;color:#4a6a4e}
+.explain-body pre{background:#f0f4ee;padding:10px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.5;white-space:pre-wrap;margin:8px 0}
+.explain-body blockquote{border-left:3px solid #c8dbca;padding-left:10px;margin:8px 0;color:#6a7a6e;white-space:normal}
+.explain-body hr{border:none;border-top:1px solid #e2e8df;margin:10px 0}
+.explain-body p{margin:4px 0;white-space:normal}
+.explain-body .loading{color:#8a9a8e;text-align:center;margin-top:40px;white-space:normal}
+.explain-body .loading::after{content:'';display:inline-block;width:14px;height:14px;border:2px solid #c8dbca;border-top-color:#5b9a6a;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-left:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.explain-body .err{color:#c66060;font-size:12px;white-space:normal}
+.explain-body .math-display{margin:8px 0;text-align:center;overflow-x:auto}
+.explain-body .math-inline{}
+.explain-body .diagram{background:#f7f9f6;border:1px solid #e2e8df;border-radius:6px;padding:10px 14px;margin:8px 0;font-family:"Courier New",monospace;font-size:13px;line-height:1.5;white-space:pre;color:#3a5a3e;overflow-x:auto}
+.explain-footer{padding:10px 18px;border-top:1px solid #eef2ec;display:flex;flex-direction:column;gap:8px}
+.ai-btns{display:flex;gap:6px}
+.btn-ai{flex:1;padding:8px;border:none;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-ai:disabled{background:#c8dbca;color:#8a9a8e;cursor:not-allowed}
+.btn-explain{background:#5b9a6a;color:#fff}
+.btn-explain:hover:not(:disabled){background:#4d8a5c}
+.btn-settings{background:#eef2ec;color:#3a5a3e}
+.btn-settings:hover{background:#e2e8df}
+.settings-panel{display:none;padding:10px;background:#f7f9f6;border-radius:8px;font-size:11px;color:#5a6e5e}
+.settings-panel.open{display:flex;flex-direction:column;gap:6px}
+.settings-panel label{font-weight:500;margin-bottom:1px}
+.settings-panel input[type=text],.settings-panel input[type=password]{width:100%;padding:4px 7px;border:1px solid #dde3da;border-radius:5px;font-size:11px;outline:none;font-family:inherit}
+.settings-panel input:focus{border-color:#5b9a6a}
+.settings-panel .chk{display:flex;align-items:center;gap:5px}
+.settings-panel .chk input{accent-color:#5b9a6a}
