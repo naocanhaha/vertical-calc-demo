@@ -98,7 +98,7 @@
 ## 文件结构
 
 ```
-草稿计算器/
+vertical-calc-demo/
 ├── index.html              入口页面
 ├── assets/
 │   └── example.png         演示截图
