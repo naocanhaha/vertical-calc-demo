@@ -108,6 +108,9 @@ function inputDel() {
     curA = curA.slice(0, -1);
     if (!curA || curA === "-") { curA = ""; state = "idle"; }
   }
+  else if (state === "op") {
+    curOp = ""; state = "input_a"; clearOpActive();
+  }
   else if (state === "input_b" && curB.length > 0) {
     curB = curB.slice(0, -1);
     if (!curB || curB === "-") { curB = ""; state = "op"; }
@@ -120,9 +123,7 @@ function inputAC() {
   curA = ""; curOp = ""; curB = ""; state = "idle"; running = false;
   clearOpActive();
   valEl.textContent = "0"; exprEl.textContent = "";
-  exprText.innerHTML = "";
   btnReplay.disabled = true;
-  showPlaceholder();
 }
 
 function clearOpActive() {
@@ -131,6 +132,7 @@ function clearOpActive() {
 
 function doCalc(startAnim = true) {
   if (running) return;
+  _animCancel = false;
   const a = parseFloat(curA), b = parseFloat(curB);
   if (isNaN(a) || isNaN(b)) return;
   if (Math.abs(a) > 9999 || Math.abs(b) > 9999) { valEl.textContent = "超出范围"; return; }
